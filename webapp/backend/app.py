@@ -984,6 +984,12 @@ def chat():
     total_est = sum(estimate_tokens(m["content"]) for m in messages)
     print(f"FINAL CONTEXT: {len(messages)} messages, ~{total_est} estimated tokens")
     
+    # === Provider routing ===
+    provider    = data.get("provider", "local")        # local | apikey | ulisse_memo
+    req_api_key = data.get("api_key", "")              # only for apikey
+    req_base_url= data.get("base_url", "")             # only for apikey
+    req_model   = data.get("model", "")                # only for apikey
+
     # === MSA Provider handling ===
     if provider == "ulisse_memo":
         # Lazy load model on first use
